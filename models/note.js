@@ -15,6 +15,7 @@ mongoose.connect(url)
   })
 
 const noteSchema = new mongoose.Schema({
+    id: Number,
     name: {
         type: String,
         minlength: 3,
@@ -26,7 +27,9 @@ const noteSchema = new mongoose.Schema({
         minlength: 8,
         required: true,
         unique: true
-    }
+    },
+    important: Boolean,
+
 })
 // personSchema.plugin(uniqueValidator);
 
