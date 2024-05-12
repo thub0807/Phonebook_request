@@ -105,11 +105,17 @@ const generateId = () => {
     }  
   }
 const IDisvaild = (id) =>{
-    if(notes.find(note => note.id === id)){
-        return false
-    }
-    return true
+    Person.find({}).then(result => {
+      result.forEach(item =>{
+        if(item.id === id){
+          return false
+        }
+        return true
+      })    
+    })
   }
+    
+  
 
 // post请求添加数据，需要body-parser中间件 request.body获取post请求的数据
 app.post('/api/persons', (request, response) => {
@@ -122,13 +128,15 @@ app.post('/api/persons', (request, response) => {
         error: ' The name or number is missing' 
       })
     }
-    Person.find({}).then(persons =>{
-      if (persons.name === body.name) {
-        return response.status(400).json({ 
-          error: '  The name must be unique' 
+    Person.find({}).then(result => {
+        result.forEach(item =>{
+          if (item.name === body.name) {
+            return response.status(400).json({ 
+              error: '  The name must be unique' 
+            })
+          }
         })
-      }
-    })
+      })
     const note = new Person({
       id: generateId(),
       name: body.name,
