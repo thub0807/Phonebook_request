@@ -140,7 +140,8 @@ app.post('/api/persons', (request, response) => {
     const note = new Person({
       id: generateId(),
       name: body.name,
-      number: body.number,                  
+      number: body.number,  
+      important: Math.random() < 0.5,                
     })
     
     note.save()
